@@ -1,0 +1,18 @@
+version: "3"
+services:
+  kaggle_pipeline:
+    build: env
+    shm_size: '64gb'
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    image: kaggle
+    volumes:
+      - .:/kaggle
+    working_dir: /kaggle
+    ports:
+      - 8880:8888

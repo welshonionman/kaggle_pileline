@@ -1,0 +1,1 @@
+export PYTHONPATH="/kaggle:$PYTHONPATH"

@@ -1,0 +1,29 @@
+name: upload to kaggle
+on: push
+
+jobs:
+  UplodaKaggle:
+    name: Upload to kaggle
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install kaggle api
+        run: pip install kaggle
+
+      - name: zip source
+        run: zip -r ./upload_kaggle_dir/src.zip ./ -x "*.github/*" "*.git/*" "*__pycache__*" "*env/*" "*notebook/*" "*upload_kaggle_dir/*"
+
+      - name: Upload to kaggle
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: kaggle datasets version -p ./upload_kaggle_dir -m 'update' -d

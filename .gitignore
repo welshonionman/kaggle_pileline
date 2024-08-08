@@ -1,0 +1,10 @@
+input/**
+
+*.png
+*.npy
+*.pth
+
+__pycache__
+kaggle.json
+reference
+
